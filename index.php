@@ -25,10 +25,10 @@
 				echo ("Failed Please type again");
 			}
 		}
-		public function getOrder($id)
+		public function getorder_trans($id)
 		{
-			$sql ="SELECT products.productname AS Productname, transaction.price AS Price, transaction.currency AS Currency,transaction.status AS Status FROM products,transaction WHERE transaction.userid='$id'";
-		
+			$sql ="SELECT products.productname AS Productname, order_trans.price AS Price, order_trans.currency AS Currency,order_trans.status AS Status FROM products,order_trans WHERE order_trans.userid='$id'";
+	
 			$query = $this->conn->query($sql);
 			
 			while ($r = mysqli_fetch_assoc($query))
@@ -37,14 +37,14 @@
 				}
 			print json_encode($rows);
 		}
-		public function addOrder($price,$currency,$productid,$userid)
+		public function addorder_trans($price,$currency,$productid,$userid)
 		{			
 	
 				$validation = new validation();	
 				$pricevali=$validation->pricevalidation($price);	
 				$currentvali=$validation->currentvalidation($currency);	
 					
-				$sql ="INSERT INTO transaction (price,currency,status,date,productid,userid)VALUES ($pricevali,'$currentvali','Pending',now(),$productid,$userid)";
+				$sql ="INSERT INTO order_trans (price,currency,status,date,productid,userid)VALUES ($pricevali,'$currentvali','Pending',now(),$productid,$userid)";
 			
 				$query = $this->conn->query($sql);
 				if($this->conn->query($sql))
@@ -56,30 +56,30 @@
 							echo "Failed added product";
 					}
 		}
-		public function updateOrder($price,$currency,$status,$userid,$transactionid)
+		public function updateorder_trans($price,$currency,$status,$userid,$orderid)
 		{
-			$sql ="UPDATE transaction SET price = '$price', currency= '$currency', status = '$status' WHERE userid = '$userid' and id ='$transactionid'";
+			$sql ="UPDATE order_trans SET price = '$price', currency= '$currency', status = '$status' WHERE userid = '$userid' and id ='$orderid'";
 				if($this->conn->query($sql))
 					{
-							echo "Succesfully Updated Transaction <br>";
+							echo "Succesfully Updated order <br>";
 					}
 					else
 					{
-							echo "Failed Update Transaction";
+							echo "Failed Update order";
 					}
 			
 		}
-		public function deleteOrder($userid,$transactionid)
+		public function deleteorder_trans($userid,$orderid)
 		{
-				$sql ="DELETE FROM transaction WHERE userid = '$userid' and id ='$transactionid'";
+				$sql ="DELETE FROM order_trans WHERE userid = '$userid' and id ='$orderid'";
 			
 				if($this->conn->query($sql))
 					{
-							echo "Succesfully DELETED Transaction <br>";
+							echo "Succesfully DELETED order <br>";
 					}
 					else
 					{
-							echo "Failed Delete Transaction";
+							echo "Failed Delete order";
 					}
 		}
 		
@@ -91,14 +91,14 @@
 	$run_function = new payments();
 	//check User
 	//$run_function ->checkCustomer('kenshikento','pwd');
-	//show Transaction
-	//$run_function->getOrder(1);
-	// addOrder
-	//$run_function->addOrder(400,'KRW','1','1');
-	//updateOrder
-	//$run_function->updateOrder('121','APB','Accepted','1','1');
+	//show order_trans
+	//$run_function->getorder_trans(1);
+	// addorder_trans
+	//$run_function->addorder_trans(100,'KRW','1','1');
+	//updateorder_trans
+	//$run_function->updateorder_trans('200','KRW','Accepted','1','1');
 	//DELETE trasnaction
-	//$run_function->deleteOrder(1,1);
+	//$run_function->deleteorder_trans(1,3);
 	//Test validation
 	//$run_function->testValidation(1,'AAA','1','1');
 	
