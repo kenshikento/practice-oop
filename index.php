@@ -83,11 +83,7 @@
 					}
 		}
 		
-		public function testValidation($price,$currency,$productid,$userid)
-			{
-							
-				
-			}
+		
 		//Check user
 		//Get transaction
 		//add transaction
