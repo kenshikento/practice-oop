@@ -11,7 +11,7 @@
 			$this->conn=$dbconnection->dbconnection();
 		}
 		
-		public function checkUser($username,$pwd)
+		public function checkCustomer($username,$pwd)
 		{
 			$sql ="SELECT * FROM user WHERE username='$username' and pwd ='$pwd'";
 			
@@ -25,7 +25,7 @@
 				echo ("Failed Please type again");
 			}
 		}
-		public function getTransaction($id)
+		public function getOrder($id)
 		{
 			$sql ="SELECT products.productname AS Productname, transaction.price AS Price, transaction.currency AS Currency,transaction.status AS Status FROM products,transaction WHERE transaction.userid='$id'";
 		
@@ -37,7 +37,7 @@
 				}
 			print json_encode($rows);
 		}
-		public function addTransaction($price,$currency,$productid,$userid)
+		public function addOrder($price,$currency,$productid,$userid)
 		{			
 	
 				$validation = new validation();	
@@ -56,7 +56,7 @@
 							echo "Failed added product";
 					}
 		}
-		public function updateTransaction($price,$currency,$status,$userid,$transactionid)
+		public function updateOrder($price,$currency,$status,$userid,$transactionid)
 		{
 			$sql ="UPDATE transaction SET price = '$price', currency= '$currency', status = '$status' WHERE userid = '$userid' and id ='$transactionid'";
 				if($this->conn->query($sql))
@@ -69,7 +69,7 @@
 					}
 			
 		}
-		public function deleteTransaction($userid,$transactionid)
+		public function deleteOrder($userid,$transactionid)
 		{
 				$sql ="DELETE FROM transaction WHERE userid = '$userid' and id ='$transactionid'";
 			
@@ -84,25 +84,23 @@
 		}
 		
 		
-		//Check user
-		//Get transaction
-		//add transaction
-		//update transaction
-		//delete trasnaction
+		
 	}
 
 
 	$run_function = new payments();
 	//check User
-	//$run_function ->checkUser('kenshikento','pwd');
+	//$run_function ->checkCustomer('kenshikento','pwd');
 	//show Transaction
-	//$run_function->getTransaction(1);
-	// addTransaction
-	//$run_function->addTransaction(400,'KRW','1','1');
-	//updateTransaction
-	//$run_function->updateTransaction('121','APB','Accepted','1','1');
+	//$run_function->getOrder(1);
+	// addOrder
+	//$run_function->addOrder(400,'KRW','1','1');
+	//updateOrder
+	//$run_function->updateOrder('121','APB','Accepted','1','1');
 	//DELETE trasnaction
-	//$run_function->deleteTransaction(1,1);
+	//$run_function->deleteOrder(1,1);
 	//Test validation
 	//$run_function->testValidation(1,'AAA','1','1');
+	
+	
 	?>
