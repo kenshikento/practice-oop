@@ -30,12 +30,12 @@
 		{
 			$sql ="
 			SELECT 
-					products.productname AS Productname,
-					order_trans.price AS Price,
-					order_trans.currency AS Currency,
-					order_trans.status AS Status 
-					FROM products,order_trans 
-					WHERE order_trans.userid='$id'
+				products.productname AS Productname,
+				order_trans.price AS Price,
+				order_trans.currency AS Currency,
+				order_trans.status AS Status 
+				FROM products,order_trans 
+				WHERE order_trans.userid='$id'
 			";
 	
 			$query = $this->conn->query($sql);
@@ -56,9 +56,9 @@
 				
 			$sql ="
 			INSERT 
-					INTO order_trans (price, currency, status, date, productid, userid)
-					VALUES 
-					($pricevali, '$currentvali', 'Pending', now(), $productid, $userid)
+				INTO order_trans (price, currency, status, date, productid, userid)
+				VALUES 
+				($pricevali, '$currentvali', 'Pending', now(), $productid, $userid)
 			";
 		
 			$query = $this->conn->query($sql);
@@ -75,8 +75,8 @@
 		{
 			$sql ="
 			UPDATE 
-					order_trans SET price = '$price', currency= '$currency', status = '$status' 
-					WHERE userid = '$userid' and id ='$orderid'
+				order_trans SET price = '$price', currency= '$currency', status = '$status' 
+				WHERE userid = '$userid' and id ='$orderid'
 			";
 
 			if ($this->conn->query($sql)) {
@@ -105,12 +105,12 @@
 	//check User
 	//$run_function ->checkCustomer('kenshikento','pwd');
 	//show order_trans
-	//$run_function->getorder_trans(1);
+	//$run_function->getOrderTransaction(1);
 	// addorder_trans
-	//$run_function->addorder_trans(100,'KRW','1','1');
+	//$run_function->addOrderTransaction(100,'KRW','1','1');
 	//updateorder_trans
-	//$run_function->updateorder_trans('200','KRW','Accepted','1','1');
+	//$run_function->updateOrderTransaction('200','KRW','Accepted','1','1');
 	//DELETE trasnaction
-	//$run_function->deleteorder_trans(1,3);
+	//$run_function->deleteOrderTransaction(1,3);
 	//Test validation
 	//$run_function->testValidation(1,'AAA','1','1');
