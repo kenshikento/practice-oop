@@ -3,10 +3,10 @@
 	class validation
 	{
 	    	/**
-			 * Checks if Currency name matches to the white list array
-	         *
-	         * @return String
-	         */			
+		* Checks if Currency name matches to the white list array
+	        *
+	        * @return String
+	        */			
 			public function currentvalidation(string $currency) 
 			{				
 				$whitelist = array('GBR','KRW','USD','VND','CNY');		
@@ -19,10 +19,10 @@
 			}
 
 	    	/**
-			 * Check if price is within the requirement 
-	         *
-	         * @return String
-	         */	
+		* Check if price is within the requirement 
+	        *
+	        * @return String
+	        */	
 			public function pricevalidation(float $price)
 			{
 				if ($price || $price === null || $price < 1) {
