@@ -5,7 +5,7 @@
 		{	
 				private $host ='localhost';
 				private $user ='root';
-				private $pwd ='pNELhaqSPKC5MJ8L';
+				private $pwd ='Example';
 				private $db ='tutorial';
 				private $conn ='null';
 	
