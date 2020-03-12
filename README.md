@@ -1,7 +1,7 @@
 # Practice_oop
 oop php
 
-Just simple query to the data base 
+Just simple query to the data base (More functional programming than OOP)
 
 New Changes incomming 
 
