@@ -8,3 +8,5 @@ New Changes incomming
 restructuring project into Transaction / Payment / Client - Customer 
 
 Implementing Repository pattern.
+
+TODO:: Convert use Prepared Statements
