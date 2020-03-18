@@ -1,7 +1,7 @@
 # Practice_oop
 oop php
 ## About
-Redoing this legendary project that i did couple years ago which is a pretty simple project based on ShopCart Application.
+Redoing this legendary project that i did couple years ago which is a pretty simple project based on ShopCart Application. Taking from some inspiration from Laravel i tried making it a bit more from scratch.
 
 ## Setting Up
 
