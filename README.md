@@ -1,12 +1,24 @@
 # Practice_oop
 oop php
+## About
+Redoing this legendary project that i did couple years ago which is a pretty simple project based on ShopCart Application. Taking from some inspiration from Laravel i tried making it a bit more from scratch.
 
-Just simple query to the data base (More functional programming than OOP)
+## Setting Up
 
-New Changes incomming 
+### Requirements
+- Use PHP 7.3
 
-restructuring project into Transaction / Payment / Client - Customer 
 
-Implementing Repository pattern.
 
-TODO:: Convert use Prepared Statements
+
+## Running Tests [Unit Testing] 
+
+### Customer Model 
+- Run `./vendor/bin/phpunit Test/Unit/Model/CustomerModelTest.php  ` to make sure you have the right database details
+
+### TODO:
+- Finish off Models 
+- Add in necessary validation involved
+- create controllers and handle custom routing
+- Figure way to return data to controller to the view
+- do simple front view
