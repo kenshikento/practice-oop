@@ -5,7 +5,7 @@ namespace App\Support\Builder;
 use App\Support\DatabaseConnection;
 use App\Support\Builder\QueryBuilderInterface;
 
-class InsertQueryBuilder implements QueryBuilderInterface
+class ExecuteQueryBuilder implements QueryBuilderInterface
 {		
 	protected $query;
 

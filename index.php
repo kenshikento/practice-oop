@@ -13,3 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 //$result = $run_function->findProductsByName('Apples')->get();
 //$request = Request::createFromGlobals();
 //dd($request);
+
+$run_function = new Customer();
+$result = $run_function->deleteCustomer(2);

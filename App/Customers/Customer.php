@@ -11,9 +11,9 @@ class Customer extends Model
 	protected $table = 'customer';
 
     /**
-     * Gets the Customer ID.
+     * Gets the Customer Info and sets it within current Parameter By ID.
      *
-     * @return Array
+     * @return $this
      */
 	public function findCustomerByID(int $id)
 	{
@@ -26,6 +26,11 @@ class Customer extends Model
 		return $this;
 	}
 
+    /**
+     * Gets the Customer Info and sets it within current Parameter By Email.
+     *
+     * @return $this
+     */
 	public function findCustomerByEmail(string $email)
 	{
 		$this->query = 'SELECT * FROM ' . $this->table . ' WHERE email=?';
@@ -37,6 +42,11 @@ class Customer extends Model
 		return $this;
 	}
 
+    /**
+     * Insert Customer.
+     *
+     * @return bool
+     */
 	public function addCustomer(Request $request) : bool
 	{
 		$validation = new CustomerValidation();
@@ -63,13 +73,21 @@ class Customer extends Model
 		return false;
 	}
 
-	public function deleteCustomer()
+	public function deleteCustomer(int $id)
 	{
+		$this->query = 'DELETE FROM '. $this->table . ' WHERE id=?';
+		$this->parameters = 'i';
+		$this->parameterData = [$id];
 
+		if ($this->deleteQuery()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public function updateCustomer()
 	{
-
+		
 	}
 }

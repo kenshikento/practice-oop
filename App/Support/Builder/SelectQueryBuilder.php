@@ -56,6 +56,4 @@ class SelectQueryBuilder implements QueryBuilderInterface
         }
         return true;
     }
-
-
 }
