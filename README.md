@@ -13,7 +13,7 @@ Redoing this legendary project that i did couple years ago which is a pretty sim
 
 ## Running Tests [Unit Testing] 
 
-### Customer Model 
+### Customer Model [Mocking The Request With Symfony Request]
 - Run `./vendor/bin/phpunit Test/Unit/Model/CustomerModelTest.php  ` to make sure you have the right database details
 
 ### TODO:
