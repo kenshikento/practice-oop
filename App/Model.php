@@ -19,12 +19,6 @@ abstract class Model
 
 	protected $data;
 
-	public function __construct()
-	{
-		$db = new DatabaseConnection();
-		$this->con = $db->dbconnection();
-	}
-
     /**
      * Sends data to builder to return query
      * 
@@ -33,7 +27,7 @@ abstract class Model
      */
 	public function query() 
 	{
-		$build = new SelectQueryBuilder($this->con);
+		$build = new SelectQueryBuilder();
 
 		$data = $build->builder(
 			$this->parameters, 
@@ -52,7 +46,7 @@ abstract class Model
      */
 	public function insertQuery()
 	{
-		$build = new ExecuteQueryBuilder($this->con);
+		$build = new ExecuteQueryBuilder();
 
 		$data = $build->builder(
 			$this->parameters, 
@@ -71,7 +65,7 @@ abstract class Model
      */
 	public function deleteQuery()
 	{
-		$build = new ExecuteQueryBuilder($this->con);
+		$build = new ExecuteQueryBuilder();
 
 		$data = $build->builder(
 			$this->parameters, 
@@ -82,6 +76,19 @@ abstract class Model
 		return $data;
 	}
 
+	public function updateQuery()
+	{
+		$build = new ExecuteQueryBuilder();
+
+		$data = $build->builder(
+			$this->parameters, 
+			$this->parameterData, 
+			$this->query
+		);
+
+		return $data;
+	}
+	
     /**
      * Grabs all data without any filtering
      * 
@@ -136,5 +143,35 @@ abstract class Model
 			return false;
 		}
 		return true;
+	}
+
+	public function updateQueryStringHelper(Array $data) : string 
+	{
+		if (empty($data)) {
+			throw Exception('empty');
+		}
+
+		if (count($data) === 1) {
+			return $data[0] . '=?'; 
+		}
+
+		$lastValue = count($data) - 1;
+		$dataString = '';
+		foreach ($data as $key => $value) {
+			// first
+			if ($key === 0) {
+				$dataString .= $value . '=?, ';
+			}
+			// middle			
+			if ($key != 0 && $key !== $lastValue) {				
+				$dataString .= $value . '=?, ';
+			}
+			// last
+			if ($key === $lastValue) {
+				$dataString .= $value . '=?';
+			}
+		}
+
+		return $dataString;
 	}
 }

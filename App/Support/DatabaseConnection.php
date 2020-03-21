@@ -27,7 +27,7 @@ class DatabaseConnection
 	}
 
 	public function dbconnection()
-	{
+	{	
 		return $this->conn; 
 	}
 

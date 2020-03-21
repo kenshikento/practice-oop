@@ -7,6 +7,7 @@ use App\Products\Products;
 use Exception;
 use Faker\Generator;
 use Test\Concerns\DatabaseConnectionTest;
+use Carbon\Carbon;
 
 trait SeedSites
 {
@@ -49,7 +50,7 @@ trait SeedSites
 		$sql = "CREATE TABLE " . $customerTableName ."(
    			ID int NOT NULL AUTO_INCREMENT,
     		Name varchar(255) NOT NULL,
-    		Age int,
+    		Age varchar(225),
     		Email varchar(255),
     		PRIMARY KEY (ID)
 		)";
@@ -64,8 +65,8 @@ trait SeedSites
 		$sql = "CREATE TABLE " . $productTableName ."(
    			ID int NOT NULL AUTO_INCREMENT,
     		Name varchar(255) NOT NULL,
-    		Price Decimal(6, 2),
-    		PRIMARY KEY (ID)
+    		Price Decimal(6, 2), 
+    		PRIMARY KEY (ID)    		
 		)";
 
 		if (!mysqli_query($con, $sql)) {
@@ -99,11 +100,11 @@ trait SeedSites
 		$faker = \Faker\Factory::create();
 		$sql = "";
 		$i = 0;
-		
+
 		$sql .= "
 				INSERT INTO customer(Name, Age, Email) 
 				VALUES 
-					('test',12,'test@hotmail.co.uk'); "
+					('test'," . $faker->dateTimeBetween($startDate = '-30 years', $endDate = 'now', $timezone = null)->format('Y-m-d') .",'test@hotmail.co.uk'); "
 		;
 
 		while ( $i < $numberofCustomer ) {
@@ -111,7 +112,7 @@ trait SeedSites
 			$sql .= "
 				INSERT INTO customer(Name, Age, Email) 
 				VALUES 
-					('". $faker->name . "', ". $faker->randomDigit .", '". $faker->email ."'); "
+					('". $faker->name . "', ". $faker->dateTimeBetween($startDate = '-30 years', $endDate = 'now', $timezone = null)->format('Y-m-d') .", '". $faker->email ."'); "
 			;
 		}
 		
@@ -128,6 +129,12 @@ trait SeedSites
 		$faker = \Faker\Factory::create();
 		$sql = "";
 		$i = 0;
+		
+		$sql .= "
+				INSERT INTO products (Name, Price) 
+				VALUES 
+					('". 'test' . "', ". $faker->randomDigitNotNull() ."); "
+		;
 
 		while ( $i < $numberofProduct ) {
 			$i++;

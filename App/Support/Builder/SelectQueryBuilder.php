@@ -11,9 +11,10 @@ class SelectQueryBuilder implements QueryBuilderInterface
 
 	protected $model;
 
-    public function __construct(\mysqli $con)
+    public function __construct()
     {
-        $this->con = $con;        
+        $db = new DatabaseConnection();
+        $this->con = $db->dbconnection();
     }
 
     /**
@@ -23,6 +24,7 @@ class SelectQueryBuilder implements QueryBuilderInterface
     */  
     public function builder(string $parameter, array $parameterData, string $query)
     {   
+
         // Need to throw class exception for this particular error
         if (!$this->validInput($parameter, $parameterData)) {
             throw new Exception('Check Data inputs also if data matches each other for MYSQLI');
@@ -40,7 +42,7 @@ class SelectQueryBuilder implements QueryBuilderInterface
         }
 
         $stmt->close();
-
+        
     	return $data;
     }
 

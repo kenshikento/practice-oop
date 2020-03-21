@@ -4,6 +4,7 @@ namespace App\Support\Builder;
 
 use App\Support\DatabaseConnection;
 use App\Support\Builder\QueryBuilderInterface;
+use Exception;
 
 class ExecuteQueryBuilder implements QueryBuilderInterface
 {		
@@ -11,19 +12,19 @@ class ExecuteQueryBuilder implements QueryBuilderInterface
 
 	protected $model;
 
-    public function __construct(\mysqli $con)
+    public function __construct()
     {
-        $this->con = $con;        
+        $db = new DatabaseConnection();
+        $this->con = $db->dbconnection();
     }
-
 
     /**
     * Query DB using parameter and query string 
     * TODO: Check the affected Rows to see if code has really excuted
     * @return Array
     */  
-    public function builder(string $parameter, array $parameterData, string $query) 
-    {   
+    public function builder(string $parameter, array $parameterData, string $query) : bool
+    {
         // Need to throw class exception for this particular error
         if (!$this->validInput($parameter, $parameterData)) {
             throw new Exception('Check Data inputs also if data matches each other for MYSQLI');
@@ -32,6 +33,9 @@ class ExecuteQueryBuilder implements QueryBuilderInterface
         $stmt = $this->con->prepare($query);
         $stmt->bind_param($parameter, ...$parameterData);
         $stmt->execute();
+
+        if ($stmt->affected_rows < 1) { return false;  }
+
         $stmt->close();
 
         return true;

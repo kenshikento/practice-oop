@@ -3,12 +3,19 @@
 namespace App\Customers;
 
 use App\Model;
+use App\Support\DatabaseConnection;
 use App\Validation\Customer as CustomerValidation;
 use Symfony\Component\HttpFoundation\Request;
+use Exception;
 
 class Customer extends Model 
 {		
 	protected $table = 'customer';
+
+	public function __construct() 
+	{
+		$this->validation = new CustomerValidation();
+	}
 
     /**
      * Gets the Customer Info and sets it within current Parameter By ID.
@@ -47,13 +54,14 @@ class Customer extends Model
      *
      * @return bool
      */
-	public function addCustomer(Request $request) : bool
+	public function addCustomer(Request $request) 
 	{
 		$validation = new CustomerValidation();
 		
 		// Need to t hink of way to send error back
 		if (!$validation->isValid(true, $request)) {
-			//return $validation->errors;
+			//dd($validation->getErrors());
+			//return $validation->getErrors();
 			return false;
 		}
 
@@ -73,7 +81,12 @@ class Customer extends Model
 		return false;
 	}
 
-	public function deleteCustomer(int $id)
+    /**
+     * deletes customer by id.
+     *
+     * @return bool
+     */
+	public function deleteCustomer(int $id) : bool
 	{
 		$this->query = 'DELETE FROM '. $this->table . ' WHERE id=?';
 		$this->parameters = 'i';
@@ -86,8 +99,55 @@ class Customer extends Model
 		return false;
 	}
 
-	public function updateCustomer()
-	{
+    /**
+     * updates customer 
+     *
+     * @return bool
+     */
+	public function updateCustomer(Request $request)
+	{	
+		$validation = new CustomerValidation();
+
+		if (!$validation->isValid(false, $request)) {
+			//return $validation->errors;
+			return false;
+		}
+
+		$email = $request->request->get('email');
+		$name = $request->request->get('name');
+		$age = $request->request->get('age');
+
+		$data = [];
+
+		if ($name) {
+			$parameterNames[] = 'name';
+			$this->parameterData[] = $name;
+			$this->parameters .= 's';
+		} 
+
+		if ($age) {
+			$parameterNames[] = 'age';
+			$this->parameterData[] = $age;
+			$this->parameters .= 's';
+		}
+
+		$this->parameters .= 's';
+		$this->parameterData[] = $email;
+
+		if(empty($parameterNames) || count($parameterNames) + 1  != strlen($this->parameters)) {
+			//Need to figure out way throw error out without shutting down system
+			//throw new Exception('updating nothing');
+			return false;
+		}
+
+		$paramz = $this->updateQueryStringHelper($parameterNames);	
+
+		$this->query = 'UPDATE ' . $this->table . ' SET '. $paramz .' WHERE email=?';
 		
+		if ($this->updateQuery()) {
+			return true;
+		}
+
+		return false;
 	}
 }
