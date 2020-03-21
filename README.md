@@ -19,6 +19,7 @@ Redoing this legendary project that i did couple years ago which is a pretty sim
 ### TODO:
 - Finish off Models 
 - Add in necessary validation involved
-- create controllers and handle custom routing
+- Remove all request data in model 
+- create controllers and handle custom routing 
 - Figure way to return data to controller to the view
 - do simple front view
