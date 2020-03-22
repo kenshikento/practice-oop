@@ -15,6 +15,7 @@ Redoing this legendary project that i did couple years ago which is a pretty sim
 
 ### Customer Model [Mocking The Request With Symfony Request]
 - Run `./vendor/bin/phpunit Test/Unit/Model/CustomerModelTest.php  ` to make sure you have the right database details
+- Run `./vendor/bin/phpunit Test/Unit/Model/ProductModelTest.php  `
 
 ### TODO:
 - Finish off Models 
