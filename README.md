@@ -8,7 +8,7 @@ Redoing this legendary project that i did couple years ago which is a pretty sim
 ### Requirements
 - Use PHP 7.3
 
-
+Entry Point too the program is Index.php no FE currently
 
 
 ## Running Tests [Unit Testing] 
