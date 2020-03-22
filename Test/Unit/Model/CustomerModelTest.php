@@ -17,19 +17,17 @@ class CustomerModelTest extends TestCase
 	{
 		$this->setUpDb();
 		$this->insertTableData();
+		$this->model = new Customer();
 	}
 
 	public function testFindByIDAssetsToTrue()
 	{	
-		$model = new Customer();
-		$this->assertIsArray($model->findCustomerByID(1)->get());
+		$this->assertIsArray($this->model->findCustomerByID(1)->get());
 	}
 
 	public function testFindByIDAssertEmptyResult()
 	{
-
-		$model = new Customer();
-		$this->assertEmpty($model->findCustomerByID(12)->get());
+		$this->assertEmpty($this->model->findCustomerByID(12)->get());
 	}
 
 	public function testInsertCustomerAssertToTrue() 
@@ -46,8 +44,7 @@ class CustomerModelTest extends TestCase
 			]
 		);
 		
-		$customer = new Customer();
-		$test = $customer->addCustomer($request);
+		$test = $this->model->addCustomer($request);
 
 		$this->assertTrue($test);
 	}
@@ -64,8 +61,7 @@ class CustomerModelTest extends TestCase
 			]
 		);
 
-		$customer = new Customer();
-		$value = $customer->addCustomer($request);
+		$value = $this->model->addCustomer($request);
 		$this->assertFalse($value);
 	}
 
@@ -81,10 +77,7 @@ class CustomerModelTest extends TestCase
 			]
 		);
 
-		$validation = new CustomerValidation();
-		$run_function = new Customer($validation);
-
-		$value = $run_function->updateCustomer($request);
+		$value = $this->model->updateCustomer($request);
 		$this->assertTrue($value);
 	}
 
@@ -99,25 +92,19 @@ class CustomerModelTest extends TestCase
 		    	'age'	=> '20-02-1993'
 			]
 		);
-		$validation = new CustomerValidation();
-		$run_function = new Customer($validation);
 
-		$value = $run_function->updateCustomer($request);
+		$value = $this->model->updateCustomer($request);
 
 		$this->assertFalse($value);
 	}
 
 	public function testDeleteCustomerByIdAndNameAssertToTrue()
 	{
-		$model = new Customer();
-
-		$this->assertTrue($model->deleteCustomer(1));
+		$this->assertTrue($this->model->deleteCustomer(1));
 	}
 
 	public function testDeleteCustomerByIdAndNameAssertToFalse()
 	{
-		$model = new Customer();
-
-		$this->assertFalse($model->deleteCustomer(50));
+		$this->assertFalse($this->model->deleteCustomer(50));
 	}
 }

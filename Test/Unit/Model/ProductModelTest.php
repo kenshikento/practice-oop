@@ -17,30 +17,27 @@ class ProductModelTest extends TestCase
 	{
 		$this->setUpDb();
 		$this->insertTableData();
+		$this->model = new Products();
 	}
 
 	public function testFindByIDAssertsIsArray()
 	{	
-		$model = new Products();
-		$this->assertIsArray($model->findProductsById(1)->get());
+		$this->assertIsArray($this->model->findProductsById(1)->get());
 	}
 
 	public function testFindByIDAssertEmptyResult()
 	{
-		$model = new Products();
-		$this->assertEmpty($model->findProductsById(50)->get());
+		$this->assertEmpty($this->model->findProductsById(50)->get());
 	}
 
 	public function testFindProductsByNameAssertsIsArray()
 	{
-		$model = new Products();
-		$this->assertIsArray($model->findProductsByName('test')->get());
+		$this->assertIsArray($this->model->findProductsByName('test')->get());
 	}
 
 	public function testFindProductsByNameAssertsEmptyArray()
 	{
-		$model = new Products();
-		$this->assertEmpty($model->findProductsByName('test1321')->get()); // Need confirm that this name isn't in db
+		$this->assertEmpty($this->model->findProductsByName('test1321')->get()); // Need confirm that this name isn't in db
 	}
 
 	public function testInsertProductsAssertTrue()
@@ -56,8 +53,7 @@ class ProductModelTest extends TestCase
 			]
 		);
 
-		$model = new Products();
-		$test = $model->addProducts($request);
+		$test = $this->model->addProducts($request);
 
 		$this->assertTrue($test);
 	}
@@ -73,13 +69,10 @@ class ProductModelTest extends TestCase
 			]
 		);
 
-		$model = new Products();
-		$value = $model->addProducts($request);
+		$value = $this->model->addProducts($request);
 		$this->assertFalse($value);
 	}
 
-
-	// update 
 	public function testUpdateCustomerAssertToTrue()
 	{
 		$request = Request::create(
@@ -91,10 +84,8 @@ class ProductModelTest extends TestCase
 		    	'price' => 10,
 			]
 		);
-		$validation = new ProductsValidation();
-		$run_function = new Products($validation);
 
-		$value = $run_function->updateProducts($request);
+		$value = $this->model->updateProducts($request);
 
 		$this->assertTrue($value);
 	}
@@ -110,25 +101,19 @@ class ProductModelTest extends TestCase
 		    	'price' => 10,
 			]
 		);
-		$validation = new ProductsValidation();
-		$run_function = new Products($validation);
 
-		$value = $run_function->updateProducts($request);
+		$value = $this->model->updateProducts($request);
 
 		$this->assertFalse($value);
 	}
 
 	public function testDeleteCustomerByIdAndNameAssertToTrue()
 	{
-		$model = new Products();
-
-		$this->assertTrue($model->deleteProducts(1,'test'));
+		$this->assertTrue($this->model->deleteProducts(1,'test'));
 	}
 
 	public function testDeleteCustomerByIdAndNameAssertToFalse()
 	{
-		$model = new Products();
-
-		$this->assertFalse($model->deleteProducts(1,'testerwe'));
+		$this->assertFalse($this->model->deleteProducts(1,'testerwe'));
 	}
 }
