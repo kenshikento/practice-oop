@@ -58,9 +58,8 @@ class Customer extends Model
 	{
 		$validation = new CustomerValidation();
 		
-		// Need to t hink of way to send error back
+		// Need to think of way to send error back
 		if (!$validation->isValid(true, $request)) {
-			//dd($validation->getErrors());
 			//return $validation->getErrors();
 			return false;
 		}

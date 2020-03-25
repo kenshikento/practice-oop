@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 //$run_function = new Customer();
 //$result = $run_function->findCustomerByEmail('dherzog@erdman.info')->get();
 
-
 //$start_Method = new MockTest();
 //$result = $start_Method->getRequest();
 //dd($result);

@@ -4,6 +4,7 @@ namespace Test\Concerns;
 
 use App\Customers\Customer;
 use App\Products\Products;
+use App\Transactions\Transactions;
 use Exception;
 use Faker\Generator;
 use Test\Concerns\DatabaseConnectionTest;
@@ -73,7 +74,24 @@ trait SeedSites
 			throw new Exception('Something went wrong ' . $productTableName . ' table');
 		}
 
-		// Need do transaction tables 
+
+
+		$transactionsTable = new Transactions();
+		$transactionsTableName = $transactionsTable->getTableName();
+
+		$sql = "CREATE TABLE " . $transactionsTableName . " (
+   			ID int NOT NULL AUTO_INCREMENT,
+    		TotalPrice Decimal(6, 2), 
+    		ProductID int, 
+    		CustomerID int,
+    		PRIMARY KEY (ID),
+    		FOREIGN KEY(ProductID) REFERENCES Products(ID),
+    		FOREIGN KEY(CustomerID) REFERENCES Customer(ID)
+		)";
+
+		if (!mysqli_query($con, $sql)) {
+			throw new Exception('Something went wrong ' . $transactionsTableName . ' table');
+		}
 	}
 
 	/**
@@ -88,6 +106,8 @@ trait SeedSites
 		$this->insertDummyDataforCustomer($con, 10);
 		$this->clearStoredResults($con);
 		$this->insertDummyDataforProduct($con, 10);
+		$this->clearStoredResults($con);
+		$this->insertDummyDataforTransaction($con, 10);
 	}
 
 	/**
@@ -146,6 +166,27 @@ trait SeedSites
 		}
 
   		mysqli_multi_query($con, $sql) or die("MySQL Error: " . mysqli_error($con) . "<hr>\nQuery: $sql");
+	}
+
+	/**
+     * Inserts Data Transactions 
+     * 
+     * @return void
+     */
+	public function insertDummyDataforTransaction($con, int $numberofTransaction) : void
+	{	
+		$faker = \Faker\Factory::create();
+		$sql = "";
+		$i = 0;
+
+		$sql .= "
+				INSERT INTO transactions (`TotalPrice`, `ProductID`, `CustomerID`)
+				VALUES 
+					(". $faker->randomDigitNotNull() .",".  1 .",". 1 ."); "
+		;
+		// seem to have issue with multi query
+		//mysqli_multi_query($con, $sql) or die("MySQL Error: " . mysqli_error($con) . "<hr>\nQuery: $sql");
+		mysqli_query($con, $sql) or die("MySQL Error: " . mysqli_error($con) . "<hr>\nQuery: $sql");
 	}
 
 	/**

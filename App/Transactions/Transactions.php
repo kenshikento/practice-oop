@@ -2,15 +2,31 @@
 
 namespace App\Transactions;
 
+use App\Model;
 use App\Support\Database;
 
-class Transactions  // TODO: STILL NEEDS TO BE WORKED ON
+class Transactions extends Model // TODO: STILL NEEDS TO BE WORKED ON
 {	
 	protected $table = 'transactions';
 
 	public function getTableName() : string 
 	{
 		return $this->table;
+	}
+
+	public function getOrderTransaction($id) 
+	{
+		$sql ="
+		SELECT 
+			products.name AS Productname,
+			order_trans.price AS Price,
+			order_trans.currency AS Currency,
+			order_trans.status AS Status 
+			FROM products,order_trans 
+			WHERE order_trans.userid='$id'
+		";
+
+		
 	}
 /*
 	public function getOrderTransaction($id)

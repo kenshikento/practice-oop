@@ -24,7 +24,6 @@ class SelectQueryBuilder implements QueryBuilderInterface
     */  
     public function builder(string $parameter, array $parameterData, string $query)
     {   
-
         // Need to throw class exception for this particular error
         if (!$this->validInput($parameter, $parameterData)) {
             throw new Exception('Check Data inputs also if data matches each other for MYSQLI');
