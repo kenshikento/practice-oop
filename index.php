@@ -20,3 +20,17 @@ use Symfony\Component\HttpFoundation\Request;
 //dd($result);
 //$run_function = new Customer();
 //$result = $run_function->deleteCustomer(2);
+
+class apples 
+{
+	use SeedSites;
+
+	public function test() 
+	{
+		$this->setUpDb();
+
+	}
+}
+
+$run_function = new apples();
+$run_function->test();

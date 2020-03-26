@@ -25,7 +25,6 @@ class Transactions extends Model // TODO: STILL NEEDS TO BE WORKED ON
 			FROM products,order_trans 
 			WHERE order_trans.userid='$id'
 		";
-
 		
 	}
 /*

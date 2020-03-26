@@ -99,7 +99,7 @@ class CustomerModelTest extends TestCase
 	}
 
 	public function testDeleteCustomerByIdAndNameAssertToTrue()
-	{	dd($this->model->deleteCustomer(1));
+	{	
 		$this->assertTrue($this->model->deleteCustomer(1));
 	}
 

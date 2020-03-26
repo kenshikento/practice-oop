@@ -3,7 +3,9 @@
 namespace Test\Concerns;
 
 use App\Customers\Customer;
+use App\Customers\OrderItems;
 use App\Products\Products;
+use App\Products\ProductOrder;
 use App\Transactions\Transactions;
 use Exception;
 use Faker\Generator;
@@ -74,19 +76,47 @@ trait SeedSites
 			throw new Exception('Something went wrong ' . $productTableName . ' table');
 		}
 
+		$orderItems = new OrderItems();
+		$ordeItemName = $orderItems->getTableName();
+
+		$sql = "CREATE TABLE " . $ordeItemName . " (
+   			ID int NOT NULL AUTO_INCREMENT,
+    		Date DATETIME, 
+    		CustomerID int,
+    		PRIMARY KEY (ID),
+    		FOREIGN KEY(CustomerID) REFERENCES Customer(ID) ON DELETE CASCADE
+		)";
+
+		if (!mysqli_query($con, $sql)) {
+			throw new Exception('Something went wrong ' . $productTableName . ' table');
+		}
 
 
-		$transactionsTable = new Transactions();
+		$productTransaction = new ProductOrder();
+		$productTransactionName = $productTransaction->getTableName();
+
+		$sql = "CREATE TABLE " . $productTransactionName . " (
+   			ID int NOT NULL AUTO_INCREMENT,
+   			Quantity int,
+    		ProductID int,
+    		PRIMARY KEY (ID),
+    		FOREIGN KEY(ProductID) REFERENCES Products(ID) ON DELETE CASCADE
+		)";
+
+		if (!mysqli_query($con, $sql)) {
+			throw new Exception('Something went wrong ' . $productTransactionName . ' table');
+		}
+
+ 		$transactionsTable = new Transactions();
 		$transactionsTableName = $transactionsTable->getTableName();
 
 		$sql = "CREATE TABLE " . $transactionsTableName . " (
    			ID int NOT NULL AUTO_INCREMENT,
-    		TotalPrice Decimal(6, 2), 
-    		ProductID int, 
-    		CustomerID int,
+    		ProductsTransactionID int, 
+    		OrderItemsID int,
     		PRIMARY KEY (ID),
-    		FOREIGN KEY(ProductID) REFERENCES Products(ID),
-    		FOREIGN KEY(CustomerID) REFERENCES Customer(ID)
+    		FOREIGN KEY(ProductsTransactionID) REFERENCES orderitems(ID) ON DELETE CASCADE,
+    		FOREIGN KEY(OrderItemsID) REFERENCES producttransaction(ID) ON DELETE CASCADE
 		)";
 
 		if (!mysqli_query($con, $sql)) {
@@ -104,9 +134,9 @@ trait SeedSites
 		$con = $this->setUpDbConnection();
 
 		$this->insertDummyDataforCustomer($con, 10);
-		$this->clearStoredResults($con);
 		$this->insertDummyDataforProduct($con, 10);
-		$this->clearStoredResults($con);
+		$this->insertDummyDataforOrderItems($con, 10);
+		$this->insertDummyDataforProductTransactions($con, 10);
 		$this->insertDummyDataforTransaction($con, 10);
 	}
 
@@ -137,6 +167,8 @@ trait SeedSites
 		}
 		
 		mysqli_multi_query($con, $sql) or die("MySQL Error: " . mysqli_error($con) . "<hr>\nQuery: $sql");
+		
+		$this->clearStoredResults($con);
 	}
 
 	/**
@@ -166,6 +198,71 @@ trait SeedSites
 		}
 
   		mysqli_multi_query($con, $sql) or die("MySQL Error: " . mysqli_error($con) . "<hr>\nQuery: $sql");
+
+  		$this->clearStoredResults($con);
+	}
+
+	/**
+     * Inserts Data OrderItems 
+     * 
+     * @return void
+     */
+	public function insertDummyDataforOrderItems($con, int $numberofItems) : void
+	{	
+		$faker = \Faker\Factory::create();
+		$sql = "";
+		$i = 0;
+
+		$sql .= "
+				INSERT INTO orderitems (`CustomerID`,`date`)
+				VALUES 
+					(".  1 .", NOW());"
+		;
+
+		while ( $i < $numberofItems ) {
+			$i++;
+			$sql .= "
+					INSERT INTO orderitems (`CustomerID`,`date`)
+					VALUES 
+						(".  rand(1,10) .", NOW());"
+			;
+		}
+
+		mysqli_multi_query($con, $sql) or die("MySQL Error: " . mysqli_error($con) . "<hr>\nQuery: $sql");
+
+		$this->clearStoredResults($con);
+	}
+
+	/**
+     * Inserts Data ProductOrder 
+     * 
+     * @return void
+     */
+	public function insertDummyDataforProductTransactions($con, int $numberofItems)  : void
+	{	
+		$faker = \Faker\Factory::create();
+		$sql = "";
+		$i = 0;
+
+		// should really get it from quantity potentially from products
+		$sql .= "
+				INSERT INTO producttransaction (`ProductID`,`Quantity`)
+				VALUES 
+					(".  1 .", " . 10 . " );"
+		;
+
+		while ( $i < $numberofItems ) {
+			$i++;
+			$sql .= "
+					INSERT INTO producttransaction (`ProductID`,`Quantity`)
+					VALUES 
+						(". rand(1,10)  .", " . rand(1,3) . " );"
+			;
+		}
+
+		mysqli_multi_query($con, $sql) or die("MySQL Error: " . mysqli_error($con) . "<hr>\nQuery: $sql");
+
+		$this->clearStoredResults($con);
 	}
 
 	/**
@@ -173,20 +270,30 @@ trait SeedSites
      * 
      * @return void
      */
-	public function insertDummyDataforTransaction($con, int $numberofTransaction) : void
+	public function insertDummyDataforTransaction($con, int $numberofItems) : void
 	{	
 		$faker = \Faker\Factory::create();
 		$sql = "";
 		$i = 0;
 
 		$sql .= "
-				INSERT INTO transactions (`TotalPrice`, `ProductID`, `CustomerID`)
+				INSERT INTO transactions (`ProductsTransactionID`, `OrderItemsID`)
 				VALUES 
-					(". $faker->randomDigitNotNull() .",".  1 .",". 1 ."); "
+					(". 1 .",".  1 ."); "
 		;
-		// seem to have issue with multi query
-		//mysqli_multi_query($con, $sql) or die("MySQL Error: " . mysqli_error($con) . "<hr>\nQuery: $sql");
-		mysqli_query($con, $sql) or die("MySQL Error: " . mysqli_error($con) . "<hr>\nQuery: $sql");
+
+		while ( $i < $numberofItems ) {
+			$i++;
+			$sql .= "
+					INSERT INTO transactions (`ProductsTransactionID`, `OrderItemsID`)
+					VALUES 
+						(". rand(1, $numberofItems) .",".  rand(1, $numberofItems) ."); "
+			;
+		}
+
+		mysqli_multi_query($con, $sql) or die("MySQL Error: " . mysqli_error($con) . "<hr>\nQuery: $sql");
+
+		$this->clearStoredResults($con);
 	}
 
 	/**
