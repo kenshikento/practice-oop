@@ -34,67 +34,51 @@ class CustomerModelTest extends TestCase
 	{
 		$faker = \Faker\Factory::create();
 
-		$request = Request::create(
-		    '/hello-world',
-		    'Post',
-		    [
+		$data = [
 		    	'name' 	=> 'Fabien',
 		    	'email' => 'randAssEmail@hotmail.co.uk',
 		    	'age'   => $faker->dateTimeBetween($startDate = '-100 years', $endDate = '-18 years', $timezone = null)->format('d-m-Y')
-			]
-		);
+		];
+
 		
-		$test = $this->model->addCustomer($request);
+		$test = $this->model->addCustomer($data);
 
 		$this->assertTrue($test);
 	}
 
 	public function testInsertCustomerAssertTofalse() 
 	{
-		$request = Request::create(
-		    '/hello-world',
-		    'Post',
-		    [
+		$data = [
 		    	'name' 	=> 'Fabien',
 		    	'email' => 'test@hotmail.co.uk',
 		    	'age'   => '25-02-1993'
-			]
-		);
+		];
 
-		$value = $this->model->addCustomer($request);
+		$value = $this->model->addCustomer($data);
 		$this->assertFalse($value);
 	}
 
 	public function testUpdateCustomerAssertTotrue()
 	{
-		$request = Request::create(
-		    '/hello-world',
-		    'Post',
-		    [
+		$data = [
 		    	'name' 	=> 'dsa123',
 		    	'email' => 'test@hotmail.co.uk',
 		    	'age'	=> '20-02-1993'
-			]
-		);
+		];
 
-		$value = $this->model->updateCustomer($request);
+		$value = $this->model->updateCustomer($data);
 		$this->assertTrue($value);
 	}
 
 	public function testUpdateCustomerAssertTofalse()
 	{
-		$request = Request::create(
-		    '/hello-world',
-		    'Post',
-		    [
+		$data = [
 		    	'name' 	=> 'dsa123',
 		    	'email' => 'test123@hotmail.co.uk',
 		    	'age'	=> '20-02-1993'
-			]
-		);
+		];
 
-		$value = $this->model->updateCustomer($request);
-
+		$value = $this->model->updateCustomer($data);
 		$this->assertFalse($value);
 	}
 

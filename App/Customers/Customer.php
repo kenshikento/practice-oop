@@ -54,20 +54,20 @@ class Customer extends Model
      *
      * @return bool
      */
-	public function addCustomer(Request $request) 
-	{
+	public function addCustomer(Array $data) 
+	{	
 		$validation = new CustomerValidation();
 		
 		// Need to think of way to send error back
-		if (!$validation->isValid(true, $request)) {
+		if (!$validation->isValid(true, $data)) {
 			//return $validation->getErrors();
 			return false;
 		}
 
 		// Need to find better way to get request data 
-		$name = $request->request->get('name');
-		$age = $request->request->get('age');
-		$email = $request->request->get('email'); 
+		$name = $data['name'];
+		$age = $data['age'];
+		$email = $data['email']; 
 
 		$this->query = 'INSERT INTO '. $this->table . '(Name, Age, Email) VALUES (?, ?, ?)';
 		$this->parameters = 'sss';
@@ -103,18 +103,18 @@ class Customer extends Model
      *
      * @return bool
      */
-	public function updateCustomer(Request $request)
+	public function updateCustomer(Array $data)
 	{	
 		$validation = new CustomerValidation();
 
-		if (!$validation->isValid(false, $request)) {
+		if (!$validation->isValid(false, $data)) {
 			//return $validation->errors;
 			return false;
 		}
 
-		$email = $request->request->get('email');
-		$name = $request->request->get('name');
-		$age = $request->request->get('age');
+		$email = $data['email'];
+		$name = $data['name'];
+		$age = $data['age'];
 
 		$data = [];
 

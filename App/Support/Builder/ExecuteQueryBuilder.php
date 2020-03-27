@@ -23,7 +23,7 @@ class ExecuteQueryBuilder implements QueryBuilderInterface
     * TODO: Check the affected Rows to see if code has really excuted
     * @return Array
     */  
-    public function builder(string $parameter, array $parameterData, string $query) : bool
+    public function builder(string $parameter, array $parameterData, string $query, ?bool $return)
     {
         // Need to throw class exception for this particular error
         if (!$this->validInput($parameter, $parameterData)) {
@@ -35,6 +35,10 @@ class ExecuteQueryBuilder implements QueryBuilderInterface
         $stmt->execute();
 
         if ($stmt->affected_rows < 1) { return false;  }
+
+        if ($return) {
+            return $stmt->insert_id;
+        }
 
         $stmt->close();
 

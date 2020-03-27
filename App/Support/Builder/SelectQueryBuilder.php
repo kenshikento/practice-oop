@@ -22,7 +22,7 @@ class SelectQueryBuilder implements QueryBuilderInterface
     *
     * @return Array
     */  
-    public function builder(string $parameter, array $parameterData, string $query)
+    public function builder(string $parameter, array $parameterData, string $query,  ?bool $return)
     {   
         // Need to throw class exception for this particular error
         if (!$this->validInput($parameter, $parameterData)) {

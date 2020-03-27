@@ -32,14 +32,15 @@ abstract class Model
 		$data = $build->builder(
 			$this->parameters, 
 			$this->parameterData, 
-			$this->query
+			$this->query,
+			false
 		);
 
 		return $data;	
 	}
 
     /**
-     * Sends parameter Insertbuilder to return query
+     * Sends parameter Insertbuilder 
      * 
      * 
      * @return Array
@@ -51,7 +52,28 @@ abstract class Model
 		$data = $build->builder(
 			$this->parameters, 
 			$this->parameterData, 
-			$this->query
+			$this->query,
+			false
+		);
+
+		return $data;	
+	}
+
+    /**
+     * Sends parameter Insertbuilder to expect id return
+     * 
+     * 
+     * @return Array
+     */
+	public function insertQueryTransactions()
+	{
+		$build = new ExecuteQueryBuilder();
+
+		$data = $build->builder(
+			$this->parameters, 
+			$this->parameterData, 
+			$this->query,
+			true
 		);
 
 		return $data;	
@@ -70,7 +92,8 @@ abstract class Model
 		$data = $build->builder(
 			$this->parameters, 
 			$this->parameterData, 
-			$this->query
+			$this->query,
+			false
 		);
 
 		return $data;
@@ -83,7 +106,8 @@ abstract class Model
 		$data = $build->builder(
 			$this->parameters, 
 			$this->parameterData, 
-			$this->query
+			$this->query,
+			false
 		);
 
 		return $data;

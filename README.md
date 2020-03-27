@@ -20,8 +20,8 @@ Entry Point too the program is Index.php no FE currently
 ### TODO:
 - Finish off Models 
 - Add in necessary validation involved
-- Remove all request data in model 
-- in test get connection from the trait
+- Add methods for transaction model
+- Need too add test for transaction model
 - create controllers and handle custom routing 
 - Figure way to return data to controller to the view
 - do simple front view

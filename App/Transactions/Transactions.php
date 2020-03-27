@@ -2,7 +2,9 @@
 
 namespace App\Transactions;
 
+use App\Customers\OrderItems;
 use App\Model;
+use App\Products\ProductOrder;
 use App\Support\Database;
 
 class Transactions extends Model // TODO: STILL NEEDS TO BE WORKED ON
@@ -14,70 +16,86 @@ class Transactions extends Model // TODO: STILL NEEDS TO BE WORKED ON
 		return $this->table;
 	}
 
-	public function getOrderTransaction($id) 
+	public function getOrderTransactionByCustomerID($id) 
 	{
-		$sql ="
+		$this->query ="
 		SELECT 
-			products.name AS Productname,
-			order_trans.price AS Price,
-			order_trans.currency AS Currency,
-			order_trans.status AS Status 
-			FROM products,order_trans 
-			WHERE order_trans.userid='$id'
-		";
-		
-	}
-/*
-	public function getOrderTransaction($id)
-	{
-		$sql ="
-		SELECT 
-			products.productname AS Productname,
-			order_trans.price AS Price,
-			order_trans.currency AS Currency,
-			order_trans.status AS Status 
-			FROM products,order_trans 
-			WHERE order_trans.userid='$id'
+			a.Date AS OrderDate,
+			a.ID AS OrderID,
+			b.ID AS TransactionID,
+			c.Quantity AS Quantity,
+			d.Name AS ProductName
+			FROM orderitems a 
+			join transactions b on b.OrderItemsID = a.ID 
+			left join producttransaction c on c.ID = b.ProductsTransactionID
+			join products d on d.ID = c.ProductID 
+			WHERE a.CustomerID = ?
 		";
 
-		$query = $this->conn->query($sql);
-		
-		while ($r = mysqli_fetch_assoc($query))
-		{
-				$rows[]=$r;
-		}
+		$this->parameters = 'i';
+		$this->parameterData = [$id];
 
-		print json_encode($rows);
+		$this->data = $this->query();
+
+		return $this;
 	}
 
-	public function addOrderTransaction(
-		float $price,
-		string $currency,
-		$productid,
-		$userid
-	)
+	public function addTransaction(Array $data)
 	{			
-		$validation 	= new validation();	
-		$pricevali 		= $validation->pricevalidation($price);	
-		$currentvali    = $validation->currentvalidation($currency);	
-			
-		$sql ="
-		INSERT 
-			INTO order_trans (price, currency, status, date, productid, userid)
-			VALUES 
-			($pricevali, '$currentvali', 'Pending', now(), $productid, $userid)
-		";
-	
-		$query = $this->conn->query($sql);
 
-		if ($this->conn->query($sql)) {
-			echo "Succesfully added product <br>";
+		$customerID = $data['customer']['customerID'];
+		
+		// TODO ADD validation 
+
+		$customerID = $this->addOrderItems($customerID);
+		$product 	= $this->addProductOrders($data['products']);
+
+		foreach ($product as $value) {
+			$this->query ="
+			INSERT 
+				INTO ". $this->table ." (ProductsTransactionID, OrderItemsID)
+				VALUES 
+				(?, ?)
+			";
+
+			$this->parameters = 'ii';
+			$this->parameterData = [$value, $customerID];
+
+			if ($this->insertQuery()) {
+				return true;
+			}			
+
+			throw new Exception('transaction did not work');
 		}
-
-		throw "Failed added product";
 
 	}
 
+	public function addOrderItems($customerID) : int
+	{
+		$orderItems = new OrderItems();
+		$orderID = $orderItems->add(['customerID' => $customerID]);
+		return $orderID;
+	}
+	
+	public function addProductOrders(Array $data) : array
+	{
+		$products = [];
+		$productID = [];
+		$productOrders = new ProductOrder();
+
+		foreach ($data['productsID'] as $key => $product) {
+
+			$products['productsID']  = $data['productsID'][$key];
+			$products['totalItems'] =  $data['totalItems'][$key];
+
+			$productID[] = $productOrders->add($products);
+		}
+
+		return $productID;
+	}
+
+    // TODO : UPDATE / DELETE
+	/* OLD CODE
 	public function updateOrderTransaction(
 		$price,
 		$currency,

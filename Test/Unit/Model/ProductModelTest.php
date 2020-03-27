@@ -44,70 +44,55 @@ class ProductModelTest extends TestCase
 	{
 		$faker = \Faker\Factory::create();
 
-		$request = Request::create(
-		    '/hello-world',
-		    'Post',
-		    [
+		$data = [
+				'id' => 1,
 		    	'name' 	=> 'FabientheProduct',
 		    	'price' => 12
-			]
-		);
+		];
 
-		$test = $this->model->addProducts($request);
+		$test = $this->model->addProducts($data);
 
 		$this->assertTrue($test);
 	}
 
 	public function testInsertProductsAssertFalse() 
 	{
-		$request = Request::create(
-		    '/hello-world',
-		    'Post',
-		    [
+		$data = [
+				'id' => 1,
 		    	'name' 	=> 'test',
 		    	'age'   => 12
-			]
-		);
+		];
 
-		$value = $this->model->addProducts($request);
+		$value = $this->model->addProducts($data);
 		$this->assertFalse($value);
 	}
 
 	public function testUpdateCustomerAssertToTrue()
 	{
-		$request = Request::create(
-		    '/hello-world',
-		    'Post',
-		    [
+		$data = [
 		    	'id'	=> 1,
 		    	'name' 	=> 'test',
 		    	'price' => 10,
-			]
-		);
+		];
 
-		$value = $this->model->updateProducts($request);
+		$value = $this->model->updateProducts($data);
 
 		$this->assertTrue($value);
 	}
 
 	public function testUpdateCustomerAssertToFalse()
 	{
-		$request = Request::create(
-		    '/hello-world',
-		    'Post',
-		    [
+		$data = [
 		    	'id'	=> 1,
 		    	'name' 	=> 'testsss',
 		    	'price' => 10,
-			]
-		);
+		];
 
-		$value = $this->model->updateProducts($request);
+		$value = $this->model->updateProducts($data);
 
 		$this->assertFalse($value);
 	}
 
-	/* This test won't work no more because of constraint of the foreign key
 	public function testDeleteProductByIdAndNameAssertToTrue()
 	{
 		$this->assertTrue($this->model->deleteProducts(1,'test'));
@@ -116,5 +101,5 @@ class ProductModelTest extends TestCase
 	public function testDeleteProductByIdAndNameAssertToFalse()
 	{
 		$this->assertFalse($this->model->deleteProducts(1,'testerwe'));
-	}*/
+	}
 }

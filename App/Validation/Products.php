@@ -58,9 +58,9 @@ class Products implements ValidationInterface
 
 	public function isValid(bool $strict = true, $input) : bool
 	{
-		$name = $input->request->get('name');
-		$price = $input->request->get('price');
-		$id = $input->request->get('id');
+		$name = $input['name'];
+		$price = $input['name'];
+		$id = $input['name'] ?? null;
 
 		if ($strict === true) {
 

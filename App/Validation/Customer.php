@@ -69,9 +69,9 @@ class Customer implements ValidationInterface
 
 	public function isValid(bool $strict, $input) : bool
 	{
-		$name = $input->request->get('name');
-		$email = $input->request->get('email');
-		$age = $input->request->get('age');
+		$name = $input['name'];
+		$email = $input['email'];
+		$age = $input['age'];
 
 		if ($strict === true) {
 

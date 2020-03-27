@@ -4,7 +4,6 @@ namespace App\Products;
 
 use App\Model;
 use App\Validation\Products as ProductsValidation;
-use Symfony\Component\HttpFoundation\Request;
 
 class Products extends Model 
 {		
@@ -64,19 +63,19 @@ class Products extends Model
      *
      * @return bool
      */
-	public function addProducts(Request $request) : bool
+	public function addProducts(Array $data) : bool
 	{
 		$validation = new ProductsValidation();
 		
 		// Need to t hink of way to send error back
-		if (!$validation->isValid(true, $request)) {
+		if (!$validation->isValid(true, $data)) {
 			//return $validation->errors;
 			return false;
 		}
 
-		// Need to find better way to get request data 
-		$name = $request->request->get('name');
-		$price = $request->request->get('price'); 
+		// Need to find better way to get data 
+		$name = $data['name'];
+		$price = $data['price'];
 
 		$this->query = 'INSERT INTO '. $this->table . '(Name, Price) VALUES (?, ?)';
 		$this->parameters = 'si';
@@ -94,18 +93,18 @@ class Products extends Model
      *
      * @return bool
      */
-	public function updateProducts(Request $request) : bool 
+	public function updateProducts(Array $data) : bool 
 	{
 		$validation = new ProductsValidation();
 
-		if (!$validation->isValid(false, $request)) {
+		if (!$validation->isValid(false, $data)) {
 			//return $validation->errors;
 			return false;
 		}
 
-		$id = $request->request->get('id');
-		$name = $request->request->get('name');
-		$price = $request->request->get('price');
+		$id = $data['id'];
+		$name = $data['name'];
+		$price = $data['price'];
 
 		$data = [];
 

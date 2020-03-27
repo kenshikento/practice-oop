@@ -115,8 +115,8 @@ trait SeedSites
     		ProductsTransactionID int, 
     		OrderItemsID int,
     		PRIMARY KEY (ID),
-    		FOREIGN KEY(ProductsTransactionID) REFERENCES orderitems(ID) ON DELETE CASCADE,
-    		FOREIGN KEY(OrderItemsID) REFERENCES producttransaction(ID) ON DELETE CASCADE
+    		FOREIGN KEY(ProductsTransactionID) REFERENCES producttransaction(ID) ON DELETE CASCADE,
+    		FOREIGN KEY(OrderItemsID) REFERENCES orderitems(ID) ON DELETE CASCADE
 		)";
 
 		if (!mysqli_query($con, $sql)) {
