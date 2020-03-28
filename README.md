@@ -14,8 +14,10 @@ Entry Point too the program is Index.php no FE currently
 ## Running Tests [Testing] 
 
 ### Customer Model [Mocking The Request With Symfony Request]
-- Run `./vendor/bin/phpunit Test/Unit/Model/CustomerModelTest.php  ` to make sure you have the right database details
+- Run `./vendor/bin/phpunit Test/Integration/Model/CustomerModelTest.php  ` to make sure you have the right database details
 - Run `./vendor/bin/phpunit Test/Integration/Model/ProductModelTest.php  `
+- Run `./vendor/bin/phpunit ./vendor/bin/phpunit Test/Unit/Validation/CustomerTest.php  ` 
+- Run `./vendor/bin/phpunit ./vendor/bin/phpunit Test/Unit/Validation/CurrencyTest.php  `
 
 ### TODO:
 - Finish off Models 

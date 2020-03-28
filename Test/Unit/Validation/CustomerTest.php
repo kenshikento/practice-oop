@@ -44,12 +44,3 @@ class CustomerTest extends TestCase
 		$this->assertFalse($this->validation->isValid(false, $data));
 	}
 }
-
-
-/*
-		bool $strict, $input
-		input types  
-		$name = $input['name'];
-		$email = $input['email'];
-		$age = $input['age'];
-*/

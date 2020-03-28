@@ -12,7 +12,7 @@ class ProductOrder extends Model
 	{
 		$productID = $data['productsID'];
 		$quantity = $data['totalItems'];
-
+		// TODO:Add Validation
 		$this->query = 'INSERT INTO '. $this->table . ' (ProductID, Quantity) VALUES (?, ?)';
 
 		$this->parameters = 'ii';
