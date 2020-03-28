@@ -5,6 +5,7 @@ namespace App\Transactions;
 use App\Customers\OrderItems;
 use App\Model;
 use App\Products\ProductOrder;
+use App\Validation\Transactions as TransactionsValidation;
 use App\Support\Database;
 
 class Transactions extends Model // TODO: STILL NEEDS TO BE WORKED ON
@@ -42,12 +43,17 @@ class Transactions extends Model // TODO: STILL NEEDS TO BE WORKED ON
 
 	public function addTransaction(Array $data)
 	{			
+		$validation = new TransactionsValidation();
+
+		if (!$validation->isValid(true, $data)) {
+			return false;
+		}
 
 		$customerID = $data['customer']['customerID'];
 		
-		// TODO ADD validation 
 
-		$customerID = $this->addOrderItems($customerID);
+
+		$orderID = $this->addOrderItems($customerID);
 		$product 	= $this->addProductOrders($data['products']);
 
 		foreach ($product as $value) {
@@ -59,7 +65,7 @@ class Transactions extends Model // TODO: STILL NEEDS TO BE WORKED ON
 			";
 
 			$this->parameters = 'ii';
-			$this->parameterData = [$value, $customerID];
+			$this->parameterData = [$value, $orderID];
 
 			if ($this->insertQuery()) {
 				return true;
