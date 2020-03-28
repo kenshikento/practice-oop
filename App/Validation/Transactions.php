@@ -6,6 +6,11 @@ use App\Customers\Customer;
 
 class Transactions implements ValidationInterface
 {		
+	/**
+	* Check if Array index passes && Checks if both values product id and quanity same amount 
+    *
+    * @return bool
+    */	
 	public function matchProducts(Array $data) : bool
 	{				
 		if (!array_key_exists('productsID', $data) ||  !array_key_exists('totalItems', $data)) {
@@ -21,6 +26,11 @@ class Transactions implements ValidationInterface
 		return true;																	
 	}
 
+	/**
+	* Check all if any value is passed && if customer exists in DB
+    *
+    * @return bool
+    */	
 	public function customerIdExists(Array $data)
 	{
 		if (count($data) < 1) {

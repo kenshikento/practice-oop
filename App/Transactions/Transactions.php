@@ -17,6 +17,11 @@ class Transactions extends Model // TODO: STILL NEEDS TO BE WORKED ON
 		return $this->table;
 	}
 
+    /**
+     * Gets Transaction info by ID.
+     *
+     * @return $this
+     */
 	public function getOrderTransactionByCustomerID($id) 
 	{
 		$this->query ="
@@ -41,6 +46,11 @@ class Transactions extends Model // TODO: STILL NEEDS TO BE WORKED ON
 		return $this;
 	}
 
+    /**
+     * Adds transaction using addOrderitems && add Productorders
+     *
+     * @return bool
+     */
 	public function addTransaction(Array $data)
 	{			
 		$validation = new TransactionsValidation();
@@ -76,6 +86,11 @@ class Transactions extends Model // TODO: STILL NEEDS TO BE WORKED ON
 
 	}
 
+    /**
+     * Adds addOrderitems 
+     *
+     * @return int
+     */
 	public function addOrderItems($customerID) : int
 	{
 		$orderItems = new OrderItems();
@@ -83,6 +98,11 @@ class Transactions extends Model // TODO: STILL NEEDS TO BE WORKED ON
 		return $orderID;
 	}
 	
+	/**
+     * Adds addProductOrders 
+     *
+     * @return array
+     */
 	public function addProductOrders(Array $data) : array
 	{
 		$products = [];

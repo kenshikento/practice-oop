@@ -9,6 +9,11 @@ class OrderItems extends Model
 {		
 	protected $table = 'orderitems';
 
+    /**
+     * Adds customer order
+     *
+     * @return bool
+     */
 	public function add(Array $data)
 	{
 		if (!array_key_exists('customerID', $data)) {
@@ -20,7 +25,7 @@ class OrderItems extends Model
 		}
 
 		$customerID = $data['customerID'];
-		
+
 		$this->query = 'INSERT INTO '. $this->table . '(CustomerID, Date) VALUES (?, now())';		
 		$this->parameters = 'i';
 		$this->parameterData = [$customerID];

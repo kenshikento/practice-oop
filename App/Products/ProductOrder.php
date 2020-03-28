@@ -8,6 +8,11 @@ class ProductOrder extends Model
 {		
 	protected $table = 'producttransaction';
 
+    /**
+     * Adds product order
+     *
+     * @return bool
+     */
 	public function add(Array $data) 
 	{
 		if (!array_key_exists('productsID', $data) || !array_key_exists('totalItems', $data)) {
