@@ -22,6 +22,7 @@ Entry Point too the program is Index.php no FE currently
 - Add in necessary validation involved
 - Add methods for transaction model
 - Need too add test for transaction model
+- Add integation testing
 - create controllers and handle custom routing 
 - Figure way to return data to controller to the view
 - do simple front view

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Model;
+namespace Tests\Integration\Model;
 
 use App\Customers\Customer;
 use App\Validation\Customer as CustomerValidation;

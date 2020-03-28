@@ -93,6 +93,8 @@ class Transactions extends Model // TODO: STILL NEEDS TO BE WORKED ON
 
 		return $productID;
 	}
+}
+
 
     // TODO : UPDATE / DELETE
 	/* OLD CODE
@@ -127,4 +129,3 @@ class Transactions extends Model // TODO: STILL NEEDS TO BE WORKED ON
 		
 		throw "Failed Delete order";
 	}*/
-}
