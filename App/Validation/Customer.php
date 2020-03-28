@@ -59,6 +59,14 @@ class Customer implements ValidationInterface
 	// Just simple way checking person age 
 	public function age(string $age)
 	{
+		$approvedFormats = 'd-m-Y';
+
+		if(!$age || strtotime($age) < 0) {
+			$this->errors[] = 'invalid date';
+			// should really throw exception as date is invalid
+			return false;
+		}
+
 		if (\Carbon\Carbon::createFromFormat('d-m-Y', $age)->age < 18) {
 			$this->errors[] = 'need to be 18 and over';
 			return false;
@@ -68,12 +76,12 @@ class Customer implements ValidationInterface
 	}
 
 	public function isValid(bool $strict, $input) : bool
-	{
-		$name = $input['name'];
+	{	
 		$email = $input['email'];
-		$age = $input['age'];
 
 		if ($strict === true) {
+			$name = $input['name'];
+			$age = $input['age'];
 
 			if ( !$this->inputs([$name, $email, $age])|| !$this->name($name) || !$this->email($email) || !$this->age($age) || !$this->uniqueEmail($email)) {
 			
