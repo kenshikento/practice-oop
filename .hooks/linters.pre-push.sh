@@ -1,5 +1,5 @@
 #!/bin/sh
-
+#!C:/Program\ Files/Git/usr/bin/sh.exe
 # Check if we actually have commits to push
 commits=`git log @{u}..`
 if [ -z "$commits" ]; then
