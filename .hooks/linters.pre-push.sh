@@ -1,6 +1,7 @@
 #!/bin/bash
 echo
 echo 'Running PHP Linter...'
+echo "Hello, World!"
 
 ./vendor/bin/phpcs
 RESULT=$?
