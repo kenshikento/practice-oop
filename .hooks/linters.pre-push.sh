@@ -1,5 +1,4 @@
 #!/bin/bash
-
 echo
 echo 'Running PHP Linter...'
 
