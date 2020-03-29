@@ -25,7 +25,7 @@ class Currency implements ValidationInterface
     *
     * @return bool
     */	
-	public function isValid(bool $strict, $input, ?array $ruleset) : bool
+	public function isValid(bool $strict, $input) : bool
 	{
 		if (!$this->whiteList($input)) {
 			return false;

@@ -27,7 +27,7 @@ class CustomerModelTest extends TestCase
 
 	public function testFindByIDAssertEmptyResult()
 	{
-		$this->assertEmpty($this->model->findCustomerByID(12)->get());
+		$this->assertEmpty($this->model->findCustomerByID(100)->get());
 	}
 
 	public function testInsertCustomerAssertToTrue() 
