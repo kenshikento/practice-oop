@@ -194,6 +194,7 @@ return array(
     'PHPUnit\\TextUI\\Configuration\\Extension' => $vendorDir . '/phpunit/phpunit/src/TextUI/Configuration/PHPUnit/Extension.php',
     'PHPUnit\\TextUI\\Configuration\\ExtensionCollection' => $vendorDir . '/phpunit/phpunit/src/TextUI/Configuration/PHPUnit/ExtensionCollection.php',
     'PHPUnit\\TextUI\\Configuration\\ExtensionCollectionIterator' => $vendorDir . '/phpunit/phpunit/src/TextUI/Configuration/PHPUnit/ExtensionCollectionIterator.php',
+    'PHPUnit\\TextUI\\Configuration\\ExtensionHandler' => $vendorDir . '/phpunit/phpunit/src/TextUI/Configuration/PHPUnit/ExtensionHandler.php',
     'PHPUnit\\TextUI\\Configuration\\File' => $vendorDir . '/phpunit/phpunit/src/TextUI/Configuration/Filesystem/File.php',
     'PHPUnit\\TextUI\\Configuration\\FileCollection' => $vendorDir . '/phpunit/phpunit/src/TextUI/Configuration/Filesystem/FileCollection.php',
     'PHPUnit\\TextUI\\Configuration\\FileCollectionIterator' => $vendorDir . '/phpunit/phpunit/src/TextUI/Configuration/Filesystem/FileCollectionIterator.php',

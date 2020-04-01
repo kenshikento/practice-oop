@@ -331,6 +331,7 @@ class ComposerStaticInit6cdfc89b23e45657482b1cc46473bd18
         'PHPUnit\\TextUI\\Configuration\\Extension' => __DIR__ . '/..' . '/phpunit/phpunit/src/TextUI/Configuration/PHPUnit/Extension.php',
         'PHPUnit\\TextUI\\Configuration\\ExtensionCollection' => __DIR__ . '/..' . '/phpunit/phpunit/src/TextUI/Configuration/PHPUnit/ExtensionCollection.php',
         'PHPUnit\\TextUI\\Configuration\\ExtensionCollectionIterator' => __DIR__ . '/..' . '/phpunit/phpunit/src/TextUI/Configuration/PHPUnit/ExtensionCollectionIterator.php',
+        'PHPUnit\\TextUI\\Configuration\\ExtensionHandler' => __DIR__ . '/..' . '/phpunit/phpunit/src/TextUI/Configuration/PHPUnit/ExtensionHandler.php',
         'PHPUnit\\TextUI\\Configuration\\File' => __DIR__ . '/..' . '/phpunit/phpunit/src/TextUI/Configuration/Filesystem/File.php',
         'PHPUnit\\TextUI\\Configuration\\FileCollection' => __DIR__ . '/..' . '/phpunit/phpunit/src/TextUI/Configuration/Filesystem/FileCollection.php',
         'PHPUnit\\TextUI\\Configuration\\FileCollectionIterator' => __DIR__ . '/..' . '/phpunit/phpunit/src/TextUI/Configuration/Filesystem/FileCollectionIterator.php',
