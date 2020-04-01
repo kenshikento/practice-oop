@@ -3,12 +3,18 @@
 namespace App\Products;
 
 use App\Model;
+use App\Support\Builder\QueryFactory;
 use App\Validation\Products as ProductsValidation;
 
 class Products extends Model 
 {		
 	protected $table = 'products';
 
+	public function __construct() 
+	{
+		$this->factory = QueryFactory::getInstance();
+	}
+	
     /**
      * Gets the Products info by ID.
      *

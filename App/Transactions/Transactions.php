@@ -5,12 +5,18 @@ namespace App\Transactions;
 use App\Customers\OrderItems;
 use App\Model;
 use App\Products\ProductOrder;
-use App\Validation\Transactions as TransactionsValidation;
+use App\Support\Builder\QueryFactory;
 use App\Support\Database;
+use App\Validation\Transactions as TransactionsValidation;
 
 class Transactions extends Model // TODO: STILL NEEDS TO BE WORKED ON
 {	
 	protected $table = 'transactions';
+
+	public function __construct() 
+	{
+		$this->factory = QueryFactory::getInstance();
+	}
 
 	public function getTableName() : string 
 	{

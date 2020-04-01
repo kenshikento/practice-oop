@@ -3,11 +3,17 @@
 namespace App\Products;
 
 use App\Model;
+use App\Support\Builder\QueryFactory;
 
 class ProductOrder extends Model 
 {		
 	protected $table = 'producttransaction';
 
+	public function __construct() 
+	{
+		$this->factory = QueryFactory::getInstance();
+	}
+	
     /**
      * Adds product order
      *

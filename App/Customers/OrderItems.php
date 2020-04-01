@@ -3,11 +3,17 @@
 namespace App\Customers;
 
 use App\Model;
+use App\Support\Builder\QueryFactory;
 use \Carbon\Carbon;
 
 class OrderItems extends Model 
 {		
 	protected $table = 'orderitems';
+
+	public function __construct() 
+	{
+		$this->factory = QueryFactory::getInstance();
+	}
 
     /**
      * Adds customer order

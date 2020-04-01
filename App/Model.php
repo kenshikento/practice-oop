@@ -4,8 +4,8 @@ namespace App;
 
 use App\Support\DatabaseConnection;
 use Exception;
-use App\Support\Builder\SelectQueryBuilder;
-use App\Support\Builder\ExecuteQueryBuilder;
+use App\Support\Builder\QueryFactory;
+
 
 abstract class Model 
 {		
@@ -19,6 +19,8 @@ abstract class Model
 
 	protected $data;
 
+	protected $factory;
+
     /**
      * Sends data to builder to return query
      * 
@@ -26,10 +28,8 @@ abstract class Model
      * @return Array
      */
 	public function query() 
-	{
-		$build = new SelectQueryBuilder();
-
-		$data = $build->builder(
+	{	
+		$data = $this->factory->make('select')->builder(
 			$this->parameters, 
 			$this->parameterData, 
 			$this->query,
@@ -47,9 +47,7 @@ abstract class Model
      */
 	public function insertQuery()
 	{
-		$build = new ExecuteQueryBuilder();
-
-		$data = $build->builder(
+		$data = $this->factory->make('execute')->builder(
 			$this->parameters, 
 			$this->parameterData, 
 			$this->query,
@@ -67,9 +65,7 @@ abstract class Model
      */
 	public function insertQueryTransactions()
 	{
-		$build = new ExecuteQueryBuilder();
-
-		$data = $build->builder(
+		$data = $this->factory->make('execute')->builder(
 			$this->parameters, 
 			$this->parameterData, 
 			$this->query,
@@ -87,9 +83,7 @@ abstract class Model
      */
 	public function deleteQuery()
 	{
-		$build = new ExecuteQueryBuilder();
-
-		$data = $build->builder(
+		$data = $this->factory->make('execute')->builder(
 			$this->parameters, 
 			$this->parameterData, 
 			$this->query,
@@ -101,9 +95,7 @@ abstract class Model
 
 	public function updateQuery()
 	{
-		$build = new ExecuteQueryBuilder();
-
-		$data = $build->builder(
+		$data = $this->factory->make('execute')->builder(
 			$this->parameters, 
 			$this->parameterData, 
 			$this->query,

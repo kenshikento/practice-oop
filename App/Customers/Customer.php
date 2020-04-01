@@ -3,10 +3,11 @@
 namespace App\Customers;
 
 use App\Model;
+use App\Support\Builder\QueryFactory;
 use App\Support\DatabaseConnection;
 use App\Validation\Customer as CustomerValidation;
-use Symfony\Component\HttpFoundation\Request;
 use Exception;
+use Symfony\Component\HttpFoundation\Request;
 
 class Customer extends Model 
 {		
@@ -15,6 +16,7 @@ class Customer extends Model
 	public function __construct() 
 	{
 		$this->validation = new CustomerValidation();
+		$this->factory = QueryFactory::getInstance();
 	}
 
     /**
